@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import { db } from './firebase';
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  orderBy
+} from 'firebase/firestore';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems]     = useState([]);
+  const [newName, setNewName] = useState('');
+
+  // Écoute temps‑réel sur la collection "pantry"
+  useEffect(() => {
+    const q = query(collection(db, 'pantry'), orderBy('addedAt', 'desc'));
+    const unsubscribe = onSnapshot(q, snapshot => {
+      const list = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setItems(list);
+    });
+    return unsubscribe;
+  }, []);
+
+  // Ajouter un nouvel article
+  const addItem = async () => {
+    if (!newName.trim()) return;
+    await addDoc(collection(db, 'pantry'), {
+      name: newName.trim(),
+      qty: 1,
+      addedAt: Date.now()
+    });
+    setNewName('');
+  };
+
+  // Supprimer un article
+  const removeItem = async id => {
+    await deleteDoc(doc(db, 'pantry', id));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app-container">
+      <h1>MonStockV3</h1>
+      <div className="input-row">
+        <input
+          value={newName}
+          onChange={e => setNewName(e.target.value)}
+          placeholder="Nouvel article"
+        />
+        <button onClick={addItem}>Ajouter</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <ul className="item-list">
+        {items.map(item => (
+          <li key={item.id}>
+            <span className="item-name">{item.name}</span>
+            <span className="item-qty">×{item.qty}</span>
+            <button
+              className="btn-delete"
+              onClick={() => removeItem(item.id)}
+            >
+              ❌
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
