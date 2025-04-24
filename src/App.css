@@ -1,5 +1,6 @@
 /* src/App.css */
 
+/* 1️⃣ Tes styles d’origine pour le <body> */
 body {
   margin: 0;
   padding: 1rem;              /* un peu plus d’air autour */
@@ -8,6 +9,7 @@ body {
   color: #333;                /* texte par défaut */
 }
 
+/* 2️⃣ Ton container principal inchangé */
 .app-container {
   max-width: 800px;
   width: 100%;
@@ -17,55 +19,94 @@ body {
   box-sizing: border-box;
 }
 
+/* 3️⃣ En-tête et logo inchangés */
 .app-header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
-
 .app-header .logo {
   width: 36px;
   height: 36px;
 }
-
 .app-header h1 {
   font-size: 1.875rem;
   margin: 0;
   color: #333;
 }
 
-.input-row {
+/* 4️⃣ --- NOUVEAU — barre de navigation --- */
+nav {
+  margin-left: auto;
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+}
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.nav-link:hover,
+.nav-link:focus {
+  background: rgba(201,111,4,0.1);
+}
+.nav-link.active {
+  color: #c96f04;
 }
 
-.input-row input,
-.input-row select {
-  flex: 1;
-  min-width: 120px;
+/* 5️⃣ Formulaire d’ajout modifié en deux lignes */
+/* conteneur général empilé */
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;       /* espace entre l’input et la ligne du bas */
+  margin-bottom: 1.5rem;
+}
+/* champ texte plein largeur */
+.input-row > input {
+  flex: none;
+  width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  border: 1px solid #dcd7cc;  /* ton sur ton avec le fond */
+  border: 1px solid #dcd7cc;
   border-radius: 8px;
   background: #fff;
 }
-
-.input-row button {
-  background: #c96f04;        /* orange chaleureux */
+/* ligne du bas : select + bouton */
+.input-row-bottom {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+/* select quantité plus étroit */
+.input-row-bottom select {
+  width: 4rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #dcd7cc;
+  border-radius: 8px;
+  background: #fff;
+}
+/* bouton qui remplit le reste */
+.input-row-bottom button {
+  flex: 1;
+  background: #c96f04;
   color: #fff;
   border: none;
-  padding: 0 1.25rem;
+  padding: 0.75rem;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
 }
-.input-row button:hover {
+.input-row-bottom button:hover {
   background: #b55900;
 }
 
+/* 6️⃣ Tes blocs par catégorie inchangés (layout en sections empilées) */
 .category-header {
   display: flex;
   align-items: center;
@@ -74,13 +115,11 @@ body {
   font-size: 1.375rem;
   margin: 2rem 0 0.75rem;
 }
-
 .item-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .item-list li {
   display: flex;
   align-items: center;
@@ -89,12 +128,10 @@ body {
   border-bottom: 1px solid #e8e3d7;
   background: transparent;
 }
-
 .item-name {
   flex: 1;
   color: #333;
 }
-
 .item-qty {
   display: flex;
   align-items: center;
@@ -102,7 +139,6 @@ body {
   min-width: 8rem;
   justify-content: center;
 }
-
 .item-qty button {
   background: none;
   border: none;
@@ -114,13 +150,11 @@ body {
 .item-qty button:hover {
   color: #b55900;
 }
-
 .item-qty span {
   width: 2rem;
   text-align: center;
   font-weight: 500;
 }
-
 .btn-delete {
   background: none;
   border: none;
