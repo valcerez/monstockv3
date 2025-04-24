@@ -1,41 +1,81 @@
+/* src/App.css */
+
+body {
+  margin: 0;
+  padding: 1rem;              /* un peu plus d’air autour */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #fdf4e3;  /* crème de fond */
+  color: #333;                /* texte par défaut */
+}
+
 .app-container {
-  max-width: 480px;
-  margin: 2rem auto;
-  padding: 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #111;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;            /* espacement interne généreux */
+  background: transparent;    /* transparent pour laisser voir le crème */
+  box-sizing: border-box;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.app-header .logo {
+  width: 36px;
+  height: 36px;
+}
+
+.app-header h1 {
+  font-size: 1.875rem;
+  margin: 0;
+  color: #333;
 }
 
 .input-row {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.input-row input {
+.input-row input,
+.input-row select {
   flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  min-width: 120px;
+  padding: 0.75rem;
   font-size: 1rem;
+  border: 1px solid #dcd7cc;  /* ton sur ton avec le fond */
+  border-radius: 8px;
+  background: #fff;
 }
 
 .input-row button {
-  padding: 0.5rem 1rem;
-  background: #007aff;
-  color: white;
+  background: #c96f04;        /* orange chaleureux */
+  color: #fff;
   border: none;
+  padding: 0 1.25rem;
   border-radius: 8px;
-  font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
 }
-
-.input-row button:active {
-  background: #005bb5;
+.input-row button:hover {
+  background: #b55900;
 }
 
-.item-list {
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c96f04;
+  font-size: 1.375rem;
+  margin: 2rem 0 0.75rem;
+}
+
+.item-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -46,54 +86,50 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e8e3d7;
+  background: transparent;
 }
 
 .item-name {
   flex: 1;
-  font-size: 1rem;
-}
-
-.item-qty-control {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 0 1rem;
-}
-
-.item-qty-control button {
-  background: none;
-  border: none;
-  padding: 0.25rem 0.5rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background 0.1s, transform 0.1s;
-}
-
-.item-qty-control button:active {
-  background: rgba(0, 0, 0, 0.05);
-  transform: scale(0.9);
+  color: #333;
 }
 
 .item-qty {
-  padding: 0 0.5rem;
-  min-width: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 8rem;
+  justify-content: center;
+}
+
+.item-qty button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #c96f04;
+  transition: color 0.2s;
+}
+.item-qty button:hover {
+  color: #b55900;
+}
+
+.item-qty span {
+  width: 2rem;
   text-align: center;
   font-weight: 500;
 }
 
 .btn-delete {
-  background: transparent;
+  background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
-  color: #ff3b30;
-  padding: 0.25rem;
-  transition: transform 0.1s;
+  color: #c96f04;
+  font-size: 1.25rem;
+  margin-left: 0.75rem;
+  transition: color 0.2s;
 }
-
-.btn-delete:active {
-  transform: scale(0.8);
+.btn-delete:hover {
+  color: #b55900;
 }

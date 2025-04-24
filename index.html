@@ -1,33 +1,71 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
   <head>
-      <!-- iOS PWA meta tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="MonStockV3" />
+    <meta charset="UTF-8" />
 
-<!-- icône iOS -->
-<link rel="apple-touch-icon" sizes="180x180" href="/pwa-192x192.png" />
+    <!-- 1️⃣ Empêche Safari iOS de zoomer sur les inputs -->
+    <meta
+      name="viewport"
+      content="width=device-width,
+               initial-scale=1,
+               maximum-scale=1,
+               user-scalable=no,
+               shrink-to-fit=no"
+    />
 
-<!-- Splash screen iOS -->
-<link
-  rel="apple-touch-startup-image"
-  href="/splash-1125x2436.png"
-  media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
-/>
-<link
-  rel="apple-touch-startup-image"
-  href="/splash-1170x2532.png"
-  media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)"
-/>
-<link
-  rel="apple-touch-startup-image"
-  href="/splash-1284x2778.png"
-  media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)"
-/>
+    <title>On Bouffe Quoi ?</title>
 
-  <!-- etc. pour les autres résolutions -->
+    <!-- 2️⃣ Couleur de la barre sur Android/PWA -->
+    <meta name="theme-color" content="#fdf4e3" />
+
+    <!-- 3️⃣ Web App Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- 4️⃣ Icônes iOS / Android -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/pwa-192x192.png"
+    />
+
+    <!-- 5️⃣ Splash screens iOS -->
+    <link
+      rel="apple-touch-startup-image"
+      href="/splash-1125x2436.png"
+      media="(device-width: 375px)
+             and (device-height: 812px)
+             and (-webkit-device-pixel-ratio: 3)"
+    />
+    <link
+      rel="apple-touch-startup-image"
+      href="/splash-1170x2532.png"
+      media="(device-width: 390px)
+             and (device-height: 844px)
+             and (-webkit-device-pixel-ratio: 3)"
+    />
+    <link
+      rel="apple-touch-startup-image"
+      href="/splash-1284x2778.png"
+      media="(device-width: 428px)
+             and (device-height: 926px)
+             and (-webkit-device-pixel-ratio: 3)"
+    />
+
+    <!-- 6️⃣ iOS PWA meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="On Bouffe Quoi ?" />
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

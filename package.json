@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://valcerez.github.io/monstockv3",
-    "scripts": {
+  "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
@@ -15,6 +15,7 @@
   "dependencies": {
     "firebase": "^11.6.0",
     "framer-motion": "^12.7.4",
+    "lucide-react": "^0.503.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
