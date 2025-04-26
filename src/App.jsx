@@ -1,35 +1,61 @@
 import React from 'react'
-import { Routes, Route, NavLink } from 'react-router-dom'
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import Stock from './Stock'
-import ShoppingList from './ShoppingList'  // à créer plus tard
+import ShoppingList from './ShoppingList'
+import SwipeContainer from './SwipeContainer'
 import './App.css'
 
 function App() {
+  const location = useLocation()
+
   return (
     <div className="app-container">
       <header className="app-header">
         <h1>On Bouffe Quoi ?</h1>
-        <nav>
+
+        {/* Nouvelle ligne de navigation */}
+        <div className="nav-container">
           <NavLink
             to="/"
             end
-            className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+            className={({ isActive }) =>
+              `nav-item stock${isActive ? ' active' : ''}`
+            }
           >
             Stock
           </NavLink>
           <NavLink
             to="/shopping"
-            className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+            className={({ isActive }) =>
+              `nav-item shopping${isActive ? ' active' : ''}`
+            }
           >
-            Liste de courses
+            Liste des courses
           </NavLink>
-        </nav>
+        </div>
       </header>
 
-      <Routes>
-        <Route path="/" element={<Stock />} />
-        <Route path="/shopping" element={<ShoppingList />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route
+            path="/"
+            element={
+              <SwipeContainer>
+                <Stock />
+              </SwipeContainer>
+            }
+          />
+          <Route
+            path="/shopping"
+            element={
+              <SwipeContainer>
+                <ShoppingList />
+              </SwipeContainer>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
     </div>
   )
 }

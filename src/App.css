@@ -1,30 +1,50 @@
 /* src/App.css */
 
-/* 1️⃣ Tes styles d’origine pour le <body> */
-body {
-  margin: 0;
-  padding: 1rem;              /* un peu plus d’air autour */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #fdf4e3;  /* crème de fond */
-  color: #333;                /* texte par défaut */
+:root {
+  --clr-bg: #fdf4e3;
+  --clr-text: #333;
+  --clr-primary: #c96f04;
+  --clr-primary-hover: #b55900;
+  --clr-border: #dcd7cc;
+  --clr-divider: #e8e3d7;
+  --clr-nav-bg: var(--clr-primary-hover);
+  --clr-nav-active-filter: brightness(1.3);
+  --font-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius: 8px;
+  --spacing: 1rem;
+  --max-form: 400px;
 }
 
-/* 2️⃣ Ton container principal inchangé */
-.app-container {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem;            /* espacement interne généreux */
-  background: transparent;    /* transparent pour laisser voir le crème */
+/* 1️⃣ Reset & global */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
+body {
+  margin: 0;
+  padding: var(--spacing);
+  font-family: var(--font-base);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 
-/* 3️⃣ En-tête et logo inchangés */
+/* 2️⃣ Conteneur principal */
+.app-container {
+  max-width: 800px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: calc(var(--spacing) * 1.5);
+}
+
+/* 3️⃣ En-tête + navigation */
 .app-header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: calc(var(--spacing) * 1.5);
 }
 .app-header .logo {
   width: 36px;
@@ -33,10 +53,7 @@ body {
 .app-header h1 {
   font-size: 1.875rem;
   margin: 0;
-  color: #333;
 }
-
-/* 4️⃣ --- NOUVEAU — barre de navigation --- */
 nav {
   margin-left: auto;
   display: flex;
@@ -44,10 +61,10 @@ nav {
 }
 .nav-link {
   text-decoration: none;
-  color: #333;
+  color: var(--clr-text);
   font-weight: bold;
   padding: 0.25rem 0.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   transition: background 0.2s;
 }
 .nav-link:hover,
@@ -55,63 +72,60 @@ nav {
   background: rgba(201,111,4,0.1);
 }
 .nav-link.active {
-  color: #c96f04;
+  color: var(--clr-primary);
 }
 
-/* 5️⃣ Formulaire d’ajout modifié en deux lignes */
-/* conteneur général empilé */
+/* 4️⃣ Formulaire d’ajout — wrapper responsive */
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+}
 .input-row {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;       /* espace entre l’input et la ligne du bas */
-  margin-bottom: 1.5rem;
+  gap: 0.5rem;
 }
-/* champ texte plein largeur */
 .input-row > input {
-  flex: none;
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  border: 1px solid #dcd7cc;
-  border-radius: 8px;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
   background: #fff;
 }
-/* ligne du bas : select + bouton */
 .input-row-bottom {
   display: flex;
   gap: 0.5rem;
-  align-items: center;
 }
-/* select quantité plus étroit */
 .input-row-bottom select {
   width: 4rem;
   padding: 0.75rem;
   font-size: 1rem;
-  border: 1px solid #dcd7cc;
-  border-radius: 8px;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
   background: #fff;
 }
-/* bouton qui remplit le reste */
 .input-row-bottom button {
   flex: 1;
-  background: #c96f04;
+  background: var(--clr-primary);
   color: #fff;
   border: none;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   cursor: pointer;
   transition: background 0.2s;
 }
 .input-row-bottom button:hover {
-  background: #b55900;
+  background: var(--clr-primary-hover);
 }
 
-/* 6️⃣ Tes blocs par catégorie inchangés (layout en sections empilées) */
+/* 5️⃣ Liste par catégories */
 .category-header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #c96f04;
+  color: var(--clr-primary);
   font-size: 1.375rem;
   margin: 2rem 0 0.75rem;
 }
@@ -125,12 +139,10 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 0;
-  border-bottom: 1px solid #e8e3d7;
-  background: transparent;
+  border-bottom: 1px solid var(--clr-divider);
 }
 .item-name {
   flex: 1;
-  color: #333;
 }
 .item-qty {
   display: flex;
@@ -144,11 +156,11 @@ nav {
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
-  color: #c96f04;
+  color: var(--clr-primary);
   transition: color 0.2s;
 }
 .item-qty button:hover {
-  color: #b55900;
+  color: var(--clr-primary-hover);
 }
 .item-qty span {
   width: 2rem;
@@ -159,11 +171,103 @@ nav {
   background: none;
   border: none;
   cursor: pointer;
-  color: #c96f04;
+  color: var(--clr-primary);
   font-size: 1.25rem;
   margin-left: 0.75rem;
   transition: color 0.2s;
 }
 .btn-delete:hover {
-  color: #b55900;
+  color: var(--clr-primary-hover);
+}
+
+/* 6️⃣ Responsive adjustments */
+/* Mobile first: tout est vertical */
+/* Passage tablette: formulaire côte-à-côte */
+@media (min-width: 600px) {
+  .input-row {
+    flex-direction: row;
+  }
+  .input-row > input {
+    flex: 1;
+  }
+  .input-row-bottom {
+    flex: none;
+  }
+}
+
+/* Desktop: grille pour catégories (optionnel) */
+@media (min-width: 900px) {
+  .item-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing);
+  }
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+}
+
+.item-name,
+.input-row > input {
+  /* pour les textes dans la liste et dans le champ input */
+  overflow-wrap: break-word;  /* autorise le retour à la ligne sur mot long */
+  word-break: break-word;     /* support additionnel */
+}
+
+/* Assurer que les flex-items peuvent rétrécir sous leur contenu natif */
+.item-list li,
+.input-row {
+  min-width: 0;               /* permet au flex child de rapetisser */
+}
+
+html,
+body,
+#root {
+  /* être au moins la hauteur de la fenêtre */
+  min-height: 100%;
+  /* couleur de fond = beige défini dans :root */
+  background-color: var(--clr-bg);
+}
+/* Container pour titre + nav */
+.app-header {
+  display: flex;
+  flex-direction: column;       /* titre au-dessus, nav en dessous */
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Ligne de navigation repensée */
+.nav-container {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  justify-content: space-between; /* Stock à gauche, courses à droite */
+}
+
+/* Chaque onglet */
+.nav-item {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  color: #000;                       /* ← noir pour inactif */
+  background-color: transparent;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: 
+    background-color 0.2s, 
+    color 0.2s,                /* on anime aussi la couleur */
+    filter 0.2s, 
+    transform 0.2s;
+}
+
+.nav-item.active {
+  background-color: var(--clr-nav-bg);
+  color: #fff;
+  transform: translateY(-2px);
+  filter: brightness(1.3);
 }
