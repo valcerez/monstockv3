@@ -16,9 +16,7 @@
 }
 
 /* 1️⃣ Reset & global */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 body {
@@ -30,81 +28,95 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+html, body, #root {
+  min-height: 100%;
+}
 
 /* 2️⃣ Conteneur principal */
 .app-container {
   max-width: 800px;
-  min-height: 100%;
   margin: 0 auto;
   padding: calc(var(--spacing) * 1.5);
+  overflow-x: hidden; /* Empêche tout débordement horizontal */
 }
 
 /* 3️⃣ En-tête + navigation */
 .app-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   margin-bottom: calc(var(--spacing) * 1.5);
-}
-.app-header .logo {
-  width: 36px;
-  height: 36px;
 }
 .app-header h1 {
   font-size: 1.875rem;
   margin: 0;
 }
-nav {
-  margin-left: auto;
+.nav-container {
   display: flex;
-  gap: 0.75rem;
+  width: 100%;
+  max-width: 600px;
+  justify-content: space-between;
 }
-.nav-link {
-  text-decoration: none;
-  color: var(--clr-text);
-  font-weight: bold;
-  padding: 0.25rem 0.5rem;
+.nav-item {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
   border-radius: var(--radius);
-  transition: background 0.2s;
+  color: #000;
+  background-color: transparent;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s, color 0.2s, filter 0.2s, transform 0.2s;
 }
-.nav-link:hover,
-.nav-link:focus {
-  background: rgba(201,111,4,0.1);
-}
-.nav-link.active {
-  color: var(--clr-primary);
+.nav-item.active {
+  background-color: var(--clr-nav-bg);
+  color: #fff;
+  transform: translateY(-2px);
+  filter: var(--clr-nav-active-filter);
 }
 
-/* 4️⃣ Formulaire d’ajout — wrapper responsive */
+/* 4️⃣ Form wrapper (Stock, Shopping, Planner) */
 .form-wrapper {
   width: 100%;
-  max-width: 400px;
+  max-width: var(--max-form);
   margin: 0 auto 1.5rem;
 }
-.input-row {
+/* Full-width override for forms on all pages */
+.stock-page > .form-wrapper,
+.shopping-page > .form-wrapper,
+.meal-planner-page > .form-wrapper {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 5️⃣ Inputs & buttons */
+.input-row,
+.meal-row,
+.planner-form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.input-row > input {
+.input-row > input,
+.input-row-bottom select,
+.meal-input,
+.planner-form input,
+.planner-form textarea {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid var(--clr-border);
   border-radius: var(--radius);
   background: #fff;
+  font-family: var(--font-base);
 }
 .input-row-bottom {
   display: flex;
   gap: 0.5rem;
-}
-.input-row-bottom select {
-  width: 4rem;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius);
-  background: #fff;
 }
 .input-row-bottom button {
   flex: 1;
@@ -119,8 +131,11 @@ nav {
 .input-row-bottom button:hover {
   background: var(--clr-primary-hover);
 }
+button {
+  font-family: var(--font-base);
+}
 
-/* 5️⃣ Liste par catégories */
+/* 6️⃣ Stock & Shopping list */
 .category-header {
   display: flex;
   align-items: center;
@@ -128,6 +143,7 @@ nav {
   color: var(--clr-primary);
   font-size: 1.375rem;
   margin: 2rem 0 0.75rem;
+  cursor: pointer;
 }
 .item-list ul {
   list-style: none;
@@ -140,9 +156,12 @@ nav {
   justify-content: space-between;
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--clr-divider);
+  min-width: 0;
 }
 .item-name {
   flex: 1;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .item-qty {
   display: flex;
@@ -151,123 +170,125 @@ nav {
   min-width: 8rem;
   justify-content: center;
 }
-.item-qty button {
+.item-qty button,
+.btn-delete,
+.meal-clear-btn {
   background: none;
   border: none;
-  font-size: 1.25rem;
   cursor: pointer;
+  font-size: 1.25rem;
   color: var(--clr-primary);
   transition: color 0.2s;
 }
-.item-qty button:hover {
+.item-qty button:hover,
+.btn-delete:hover,
+.meal-clear-btn:hover {
   color: var(--clr-primary-hover);
+}
+.btn-delete {
+  margin-left: 0.75rem;
 }
 .item-qty span {
   width: 2rem;
   text-align: center;
   font-weight: 500;
 }
-.btn-delete {
+
+/* 7️⃣ Overrides pour MealPlanner : frise à 3 dates et largeur mobile */
+.meal-planner-page .planner-header {
+  display: flex;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;                /* Confiné à la largeur du .app-container */
+  margin: 0 auto 1rem;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+.meal-planner-page .planner-header-cell {
+  flex: 0 0 15%;                  /* chaque cellule fait 15% du conteneur */
+  max-width: 15%;
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.meal-planner-page .planner-header-cell.active {
+  flex: 0 0 auto;                 /* s’adapte au contenu */
+  width: auto;
+  padding: 0.4rem 0.6rem;          
+  background-color: var(--clr-nav-bg);
+  color: #fff;
+  border-radius: var(--radius);
+  margin: 0 auto;
+  transform: translateY(-2px);
+  filter: var(--clr-nav-active-filter);
+}
+
+/* 8️⃣ MealPlanner list */
+.meal-planner-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+}
+.meal-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+  padding: var(--spacing);
+  border-bottom: 1px solid var(--clr-divider);
+  background: #fff;
+  border-radius: var(--radius);
+  min-width: 0;
+}
+.meal-label {
+  font-weight: bold;
+  color: #b55900;
+}
+.meal-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  background: #fff;
+  font-family: var(--font-base);
+  resize: vertical;
+}
+.meal-clear-btn {
+  align-self: flex-end;
   background: none;
   border: none;
+  font-size: 1.25rem;
   cursor: pointer;
   color: var(--clr-primary);
-  font-size: 1.25rem;
-  margin-left: 0.75rem;
   transition: color 0.2s;
 }
-.btn-delete:hover {
+.meal-clear-btn:hover {
   color: var(--clr-primary-hover);
 }
 
-/* 6️⃣ Responsive adjustments */
-/* Mobile first: tout est vertical */
-/* Passage tablette: formulaire côte-à-côte */
-@media (min-width: 600px) {
-  .input-row {
-    flex-direction: row;
-  }
-  .input-row > input {
-    flex: 1;
-  }
-  .input-row-bottom {
-    flex: none;
-  }
+/* 9️⃣ Full-width page containers */
+.stock-page,
+.shopping-page,
+.meal-planner-page {
+  width: 100%;
+  min-width: 100%;
 }
 
-/* Desktop: grille pour catégories (optionnel) */
-@media (min-width: 900px) {
-  .item-list {
-    display: grid;
+/* Mobile adjustments (autres pages) */
+@media (max-width: 600px) {
+  .planner-body {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing);
+    overflow-x: auto;
   }
-}
-
-.form-wrapper {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto 1.5rem;
-}
-
-.item-name,
-.input-row > input {
-  /* pour les textes dans la liste et dans le champ input */
-  overflow-wrap: break-word;  /* autorise le retour à la ligne sur mot long */
-  word-break: break-word;     /* support additionnel */
-}
-
-/* Assurer que les flex-items peuvent rétrécir sous leur contenu natif */
-.item-list li,
-.input-row {
-  min-width: 0;               /* permet au flex child de rapetisser */
-}
-
-html,
-body,
-#root {
-  /* être au moins la hauteur de la fenêtre */
-  min-height: 100%;
-  /* couleur de fond = beige défini dans :root */
-  background-color: var(--clr-bg);
-}
-/* Container pour titre + nav */
-.app-header {
-  display: flex;
-  flex-direction: column;       /* titre au-dessus, nav en dessous */
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Ligne de navigation repensée */
-.nav-container {
-  display: flex;
-  width: 100%;
-  max-width: 400px;
-  justify-content: space-between; /* Stock à gauche, courses à droite */
-}
-
-/* Chaque onglet */
-.nav-item {
-  flex: 1;
-  text-align: center;
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius);
-  color: #000;                       /* ← noir pour inactif */
-  background-color: transparent;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  transition: 
-    background-color 0.2s, 
-    color 0.2s,                /* on anime aussi la couleur */
-    filter 0.2s, 
-    transform 0.2s;
-}
-
-.nav-item.active {
-  background-color: var(--clr-nav-bg);
-  color: #fff;
-  transform: translateY(-2px);
-  filter: brightness(1.3);
+  .meal-row {
+    gap: 0.25rem;
+  }
+  .meal-clear-btn {
+    align-self: flex-end;
+  }
 }

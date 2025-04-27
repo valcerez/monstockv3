@@ -1,8 +1,10 @@
+// src/App.jsx
 import React from 'react'
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Stock from './Stock'
 import ShoppingList from './ShoppingList'
+import MealPlanner from './MealPlanner'            // ← import ajouté
 import SwipeContainer from './SwipeContainer'
 import './App.css'
 
@@ -14,8 +16,27 @@ function App() {
       <header className="app-header">
         <h1>On Bouffe Quoi ?</h1>
 
-        {/* Nouvelle ligne de navigation */}
         <div className="nav-container">
+          
+          {/* Onglet Planner */}
+          <NavLink
+            to="/planner"
+            className={({ isActive }) =>
+              `nav-item planner${isActive ? ' active' : ''}`
+            }
+          >
+            🍱🥘
+          </NavLink>
+
+          <NavLink
+            to="/shopping"
+            className={({ isActive }) =>
+              `nav-item shopping${isActive ? ' active' : ''}`
+            }
+          >
+            🛒
+          </NavLink>
+
           <NavLink
             to="/"
             end
@@ -23,15 +44,7 @@ function App() {
               `nav-item stock${isActive ? ' active' : ''}`
             }
           >
-            Stock
-          </NavLink>
-          <NavLink
-            to="/shopping"
-            className={({ isActive }) =>
-              `nav-item shopping${isActive ? ' active' : ''}`
-            }
-          >
-            Liste des courses
+            🏠
           </NavLink>
         </div>
       </header>
@@ -51,6 +64,15 @@ function App() {
             element={
               <SwipeContainer>
                 <ShoppingList />
+              </SwipeContainer>
+            }
+          />
+          {/* Nouvelle route /planner */}
+          <Route
+            path="/planner"
+            element={
+              <SwipeContainer>
+                <MealPlanner />
               </SwipeContainer>
             }
           />

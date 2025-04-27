@@ -16,7 +16,6 @@ import { CATEGORIES, CATEGORY_KEYWORDS } from './config/categories'
 import { ChevronDown } from 'lucide-react'
 import './App.css'
 
-// Catégorisation automatique basée sur les mêmes mots-clés
 function autoCategorize(name) {
   const lower = name.toLowerCase()
   for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
@@ -124,8 +123,6 @@ export default function ShoppingList() {
         {CATEGORIES.map(cat => {
           const Icon = cat.icon
           const list = grouped[cat.value] || []
-          if (!list.length) return null
-
           return (
             <section key={cat.value}>
               <div
@@ -152,32 +149,38 @@ export default function ShoppingList() {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {list.map(item => (
-                      <motion.li
-                        key={item.id}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        transition={{ duration: 0.2 }}
-                        layout
-                      >
-                        <span className="item-name">{item.name}</span>
-                        <div className="item-qty">
-                          <button
-                            onClick={() => updateQty(item.id, item.qty - 1)}
-                            disabled={item.qty <= 1}
-                          >–</button>
-                          <span>{item.qty}</span>
-                          <button
-                            onClick={() => updateQty(item.id, item.qty + 1)}
-                          >+</button>
-                        </div>
-                        <button
-                          className="btn-delete"
-                          onClick={() => deleteItem(item.id)}
-                        >×</button>
-                      </motion.li>
-                    ))}
+                    {list.length > 0
+                      ? list.map(item => (
+                          <motion.li
+                            key={item.id}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.2 }}
+                            layout
+                          >
+                            <span className="item-name">{item.name}</span>
+                            <div className="item-qty">
+                              <button
+                                onClick={() => updateQty(item.id, item.qty - 1)}
+                                disabled={item.qty <= 1}
+                              >–</button>
+                              <span>{item.qty}</span>
+                              <button
+                                onClick={() => updateQty(item.id, item.qty + 1)}
+                              >+</button>
+                            </div>
+                            <button
+                              className="btn-delete"
+                              onClick={() => deleteItem(item.id)}
+                            >
+                              ×
+                            </button>
+                          </motion.li>
+                        ))
+                      : (
+                          <li className="empty">Aucun élément</li>
+                        )}
                   </motion.ul>
                 )}
               </AnimatePresence>
