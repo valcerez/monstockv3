@@ -25,7 +25,7 @@ body {
   font-family: var(--font-base);
   background-color: var(--clr-bg);
   color: var(--clr-text);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 html, body, #root {
@@ -37,7 +37,7 @@ html, body, #root {
   max-width: 800px;
   margin: 0 auto;
   padding: calc(var(--spacing) * 1.5);
-  overflow-x: hidden; /* Empêche tout débordement horizontal */
+  overflow-x: hidden;
 }
 
 /* 3️⃣ En-tête + navigation */
@@ -67,8 +67,7 @@ html, body, #root {
   background-color: transparent;
   font-weight: bold;
   cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s, color 0.2s, filter 0.2s, transform 0.2s;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s, filter 0.2s;
 }
 .nav-item.active {
   background-color: var(--clr-nav-bg);
@@ -83,7 +82,6 @@ html, body, #root {
   max-width: var(--max-form);
   margin: 0 auto 1.5rem;
 }
-/* Full-width override for forms on all pages */
 .stock-page > .form-wrapper,
 .shopping-page > .form-wrapper,
 .meal-planner-page > .form-wrapper {
@@ -131,9 +129,6 @@ html, body, #root {
 .input-row-bottom button:hover {
   background: var(--clr-primary-hover);
 }
-button {
-  font-family: var(--font-base);
-}
 
 /* 6️⃣ Stock & Shopping list */
 .category-header {
@@ -156,7 +151,6 @@ button {
   justify-content: space-between;
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--clr-divider);
-  min-width: 0;
 }
 .item-name {
   flex: 1;
@@ -185,36 +179,44 @@ button {
 .meal-clear-btn:hover {
   color: var(--clr-primary-hover);
 }
-.btn-delete {
-  margin-left: 0.75rem;
-}
 .item-qty span {
   width: 2rem;
   text-align: center;
   font-weight: 500;
 }
 
-/* 7️⃣ Overrides pour MealPlanner : frise à 3 dates et largeur mobile */
+/* ✅ Bouton de validation (encoche) dans la liste des courses */
+.btn-checkoff {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--clr-primary);
+  transition: color 0.2s;
+}
+.btn-checkoff:hover {
+  color: var(--clr-primary-hover);
+}
+
+/* 7️⃣ Overrides MealPlanner (frise) */
 .meal-planner-page .planner-header {
   display: flex;
   overflow-x: auto;
   width: 100%;
-  max-width: 100%;                /* Confiné à la largeur du .app-container */
   margin: 0 auto 1rem;
-  box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
 }
 .meal-planner-page .planner-header-cell {
-  flex: 0 0 15%;                  /* chaque cellule fait 15% du conteneur */
+  flex: 0 0 15%;
   max-width: 15%;
   padding: 0.5rem 0;
   text-align: center;
   font-size: 0.9rem;
 }
 .meal-planner-page .planner-header-cell.active {
-  flex: 0 0 auto;                 /* s’adapte au contenu */
+  flex: 0 0 auto;
   width: auto;
-  padding: 0.4rem 0.6rem;          
+  padding: 0.4rem 0.6rem;
   background-color: var(--clr-nav-bg);
   color: #fff;
   border-radius: var(--radius);
@@ -225,16 +227,13 @@ button {
 
 /* 8️⃣ MealPlanner list */
 .meal-planner-list {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--spacing);
   margin: 0;
   padding: 0;
-  min-width: 100%;
 }
 .meal-row {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--spacing);
@@ -242,33 +241,16 @@ button {
   border-bottom: 1px solid var(--clr-divider);
   background: #fff;
   border-radius: var(--radius);
-  min-width: 0;
 }
 .meal-label {
   font-weight: bold;
   color: #b55900;
 }
 .meal-input {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius);
-  background: #fff;
-  font-family: var(--font-base);
   resize: vertical;
 }
 .meal-clear-btn {
   align-self: flex-end;
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  color: var(--clr-primary);
-  transition: color 0.2s;
-}
-.meal-clear-btn:hover {
-  color: var(--clr-primary-hover);
 }
 
 /* 9️⃣ Full-width page containers */
@@ -276,19 +258,18 @@ button {
 .shopping-page,
 .meal-planner-page {
   width: 100%;
-  min-width: 100%;
 }
 
-/* Mobile adjustments (autres pages) */
-@media (max-width: 600px) {
-  .planner-body {
-    grid-template-columns: repeat(2, 1fr);
-    overflow-x: auto;
-  }
-  .meal-row {
-    gap: 0.25rem;
-  }
-  .meal-clear-btn {
-    align-self: flex-end;
-  }
+/* 🔄 SwipeContainer full-width dynamique */
+.swipe-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.swipe-content {
+  display: flex;
+}
+.swipe-content > div {
+  flex: 0 0 100%;
+  width: 100%;
 }

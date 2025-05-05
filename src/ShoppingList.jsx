@@ -15,9 +15,19 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { CATEGORIES, CATEGORY_KEYWORDS } from './config/categories'
 import { ChevronDown } from 'lucide-react'
 import './App.css'
+import { CheckSquare } from 'lucide-react'
+
 
 function autoCategorize(name) {
-  const lower = name.toLowerCase()
+  const lower = name.toLowerCase().trim()
+  for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    for (const k of keywords) {
+      if (lower === k) {
+        return cat 
+      }
+    }
+  }
+  
   for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
     if (keywords.some(k => lower.includes(k))) {
       return cat
@@ -171,10 +181,11 @@ export default function ShoppingList() {
                               >+</button>
                             </div>
                             <button
-                              className="btn-delete"
+                              className="btn-checkoff"
                               onClick={() => deleteItem(item.id)}
+                              title="Cocher pour retirer"
                             >
-                              ×
+                              <CheckSquare />
                             </button>
                           </motion.li>
                         ))

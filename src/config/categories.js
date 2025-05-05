@@ -9,7 +9,9 @@ import {
     Wheat,
     IceCream,
     Zap,
-    Droplet
+    Droplet,
+    MilkIcon,
+    GlassWater
   } from 'lucide-react'
   
   /**
@@ -25,6 +27,8 @@ import {
     { label: 'Surgelés',   value: 'frozen',     icon: IceCream  },
     { label: 'Sauces',     value: 'sauces',     icon: Droplet    },
     { label: 'Divers',     value: 'misc',       icon: Zap       },
+    { label: 'Fromages',   value: 'cheeses',    icon: MilkIcon},
+    { label: 'Condiments', value: 'condiments', icon: GlassWater },
   ]
   
   /**
@@ -166,6 +170,17 @@ import {
       'figue', 'figues', 'raisin sec', 'abricot sec',
       'fruit', 'fruits'
     ],
+    
+    cheeses: [
+      'fromage', 'fromages', 'gruyère', 'emmental', 'comté', 'parmesan', 'mozzarella', 'brie',
+      'camembert', 'roquefort', 'bleu', 'chèvre', 'reblochon', 'raclette', 'cantal', 'tomme',
+      'ricotta', 'feta', 'gorgonzola', 'mascarpone', 'philadelphia', 'boursin'
+    ],
+    
+    condiments: [
+      'cornichon', 'cornichons', 'câpres', 'capres', 'olives', 'olive', 'relish', 'pickles',
+      'raifort'
+    ],
   
     vegetables: [
       'tomate', 'tomates', 'tomatte', 'tomates cerises', 'tomate cerise', 'tomates-cerises',
@@ -185,7 +200,7 @@ import {
       'potiron', 'potirons', 'citrouille', 'courge spaghetti', 'butternut',
       'haricot vert', 'haricots verts', 'petits pois', 'pois', 'petit pois', 'pois chiche', 'pois chiches',
       'champignon', 'champignons', 'cepe', 'cèpe', 'morille', 'morilles', 'girolle', 'girolles', 'pleurote',
-      'légume', 'légumes'
+      'légume', 'légumes', 'poireaux', 'poireau'
     ],
   
     starches: [
@@ -238,5 +253,7 @@ import {
       'sauce tomate', 'tomate sauce',
       'sauce curry', 'curry sauce'
     ],
+
+  
   }
   

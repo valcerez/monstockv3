@@ -18,7 +18,15 @@ import './App.css'
 
 // Catégorisation automatique basée sur les mots-clés
 function autoCategorize(name) {
-  const lower = name.toLowerCase()
+  const lower = name.toLowerCase().trim()
+  for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    for (const k of keywords) {
+      if (lower === k) {
+        return cat 
+      }
+    }
+  }
+  
   for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
     if (keywords.some(k => lower.includes(k))) {
       return cat
